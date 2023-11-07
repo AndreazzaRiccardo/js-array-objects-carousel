@@ -28,11 +28,11 @@ const images = [
 // *********************************************************************************
 // ADD ELEMENTS IN DOM
 
-let dirImg = "";
+let thumbImg = "";
 let mainImg = "";
 
 images.forEach(curImg => {
-    dirImg += `
+    thumbImg += `
         <div class="thumb">
             <img src="./${curImg.image}" alt="">
         </div>
@@ -49,7 +49,7 @@ images.forEach(curImg => {
     `;
 });
 
-document.querySelector(".thumbs").innerHTML += dirImg;
+document.querySelector(".thumbs").innerHTML += thumbImg;
 document.querySelector(".items").innerHTML = mainImg;
 
 
@@ -148,7 +148,9 @@ function showDown() {
 function selectImg (index) {
     imgItem[activeIndex].classList.remove("active");
     thumbItem[activeIndex].classList.remove("active");
+
     activeIndex = index;
+    
     imgItem[activeIndex].classList.add("active");
     thumbItem[activeIndex].classList.add("active");
 }

@@ -98,6 +98,29 @@ thumbContainer.addEventListener("mouseout", function(){
 
 
 // *********************************************************************************
+// BUTTONS
+
+document.getElementById("start").addEventListener("click", function(){
+    clearInterval(myInterval);
+    myInterval = setInterval(() => {
+        showUp();
+    }, 2000);
+})
+
+document.getElementById("stop").addEventListener("click", function(){
+    clearInterval(myInterval);
+})
+
+document.getElementById("invert").addEventListener("click", function(){
+    clearInterval(myInterval);
+    myInterval = setInterval(() => {
+        showDown();
+    }, 2000);
+})
+
+
+
+// *********************************************************************************
 // FUNCTION
 
 function showUp() {

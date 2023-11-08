@@ -29,39 +29,38 @@ const images = [
 // ADD ELEMENTS IN DOM
 
 let thumbImg = "";
-let mainImg = "";
+let mainImg  = "";
 
 images.forEach(curImg => {
     thumbImg += `
         <div class="thumb">
-            <img src="./${curImg.image}" alt="">
+            <img src="./${curImg.image}" alt="${curImg.title}">
         </div>
     `;
 
     mainImg += `
         <div class="item">
-            <img src="./${curImg.image}" alt="">
+            <img src="./${curImg.image}" alt="${curImg.title}">
             <div class="description">
                 <h2>${curImg.title}</h2>
                 <p>${curImg.text}</p>
             </div>
         </div>
     `;
-});
+})
 
 document.querySelector(".thumbs").innerHTML += thumbImg;
-document.querySelector(".items").innerHTML = mainImg;
+document.querySelector(".items").innerHTML   = mainImg;
 
 
 // *********************************************************************************
 // ADD EVENT LISTENER
 
-const imgItem = document.querySelectorAll(".item");
+const imgItem   = document.querySelectorAll(".item");
 const thumbItem = document.querySelectorAll(".thumb");
 
 let activeIndex = 0;
-imgItem[activeIndex].classList.add("active");
-thumbItem[activeIndex].classList.add("active");
+showActiveIndex();
 
 document.querySelector(".next").addEventListener("click", function(){
     showUp();
@@ -75,25 +74,21 @@ thumbItem.forEach((curThumb, i) => {
     curThumb.addEventListener("click", function(){
         selectImg(i);
     })
-});
+})
 
 // *********************************************************************************
 // INTERVAL CAROUSEL
 
-let myInterval = setInterval(() => {
-    showUp();
-}, 2000);
-
 const thumbContainer = document.querySelector(".thumbs");
+
+let myInterval = setInterval(showUp, 2000);
 
 thumbContainer.addEventListener("mouseover", function(){
     clearInterval(myInterval)
 })
 
 thumbContainer.addEventListener("mouseout", function(){
-    myInterval = setInterval(() => {
-        showUp();
-    }, 2000);
+    myInterval = setInterval(showUp, 2000);
 })
 
 
@@ -102,9 +97,7 @@ thumbContainer.addEventListener("mouseout", function(){
 
 document.getElementById("start").addEventListener("click", function(){
     clearInterval(myInterval);
-    myInterval = setInterval(() => {
-        showUp();
-    }, 2000);
+    myInterval = setInterval(showUp, 2000);
 })
 
 document.getElementById("stop").addEventListener("click", function(){
@@ -113,46 +106,40 @@ document.getElementById("stop").addEventListener("click", function(){
 
 document.getElementById("invert").addEventListener("click", function(){
     clearInterval(myInterval);
-    myInterval = setInterval(() => {
-        showDown();
-    }, 2000);
+    myInterval = setInterval(showDown, 2000);
 })
-
-
 
 // *********************************************************************************
 // FUNCTION
 
-function showUp() {
-    imgItem[activeIndex].classList.remove("active");
-    thumbItem[activeIndex].classList.remove("active");
-
-    (activeIndex < imgItem.length - 1) ? activeIndex++ : activeIndex = 0;
-
+function showActiveIndex () {
     imgItem[activeIndex].classList.add("active");
     thumbItem[activeIndex].classList.add("active");
 }
 
-
-function showDown() {
+function hideActiveIndex () {
     imgItem[activeIndex].classList.remove("active");
     thumbItem[activeIndex].classList.remove("active");
+}
 
+function showUp () {
+    hideActiveIndex();
+    (activeIndex < imgItem.length - 1) ? activeIndex++ : activeIndex = 0;
+    showActiveIndex();
+}
+
+
+function showDown () {
+    hideActiveIndex();
     (activeIndex > 0) ? activeIndex-- : activeIndex = imgItem.length - 1;
-
-    imgItem[activeIndex].classList.add("active");
-    thumbItem[activeIndex].classList.add("active");
+    showActiveIndex();
 }
 
 
 function selectImg (index) {
-    imgItem[activeIndex].classList.remove("active");
-    thumbItem[activeIndex].classList.remove("active");
-
+    hideActiveIndex();
     activeIndex = index;
-    
-    imgItem[activeIndex].classList.add("active");
-    thumbItem[activeIndex].classList.add("active");
+    showActiveIndex();
 }
 
 
